@@ -149,8 +149,20 @@ function getAllResult(promises) {
  * [promise1, promise4, promise3] => Promise.resolved('104030')
  * [promise1, promise4, promise3, promise2] => Promise.resolved('10403020')
  */
-function queuePromises(/* promises */) {
-  throw new Error('Not implemented');
+function queuePromises(promises) {
+  const promiseArr = new Array(promises.lenght);
+  let counerResolve = 0;
+
+  return new Promise((resolve) => {
+    promises.forEach((promise, index) => {
+      return promise.then((result) => {
+        promiseArr[index] = result;
+        counerResolve += 1;
+        if (counerResolve === promises.length) resolve(promiseArr.join(''));
+        return result;
+      });
+    });
+  });
 }
 
 module.exports = {
